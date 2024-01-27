@@ -13,6 +13,13 @@ types = {
 AO = Arithematic Operator
 OUT = Output
 '''
+def is_float(value):
+    try:
+        float_value = float(value)
+        return True
+    except ValueError:
+        return False
+
 
 def lex(data):
     
@@ -30,6 +37,17 @@ def lex(data):
                 currentToken = {
                     "image": tok,
                     "type": "integer"
+                }
+                tokens.append(currentToken)
+                currentToken = {}
+                
+                tok = ""
+                
+            if is_float(tok) == True:
+                    
+                currentToken = {
+                    "image": tok,
+                    "type": "float"
                 }
                 tokens.append(currentToken)
                 currentToken = {}
@@ -57,9 +75,10 @@ def lex(data):
             if tok == " " or tok == ";":
                 tok = ""
                 
-        if char == "\"":
+        elif char == "\"":
             if stringstart == False:
-                stringstart == True
+                stringstart = True
+                
             elif stringstart == True:
                 currentToken = {
                         "image": tok,
@@ -67,7 +86,7 @@ def lex(data):
                     }
                 tokens.append(currentToken) 
                 currentToken = {}
-                stringstart == False
+                stringstart = False
             tok = ""
             
         else: 

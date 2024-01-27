@@ -5,9 +5,9 @@ def openfile(filename):
     return data
 
 if __name__ == "__main__":
+    lexer = langcode.pseudocode_lexer.Lexer()
     data = openfile("test.aqa")
-    
-    tokens = langcode.pseudocode_lexer.lex(data)
-    print(tokens) 
+    tokens = lexer.lex(data)
+    print(tokens)
     
     # there has gotta be a better way to do the lexer stuff lmao

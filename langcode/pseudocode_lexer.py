@@ -36,8 +36,7 @@ class Lexer():
         self.tok = ""
         self.line = []
 
-    @staticmethod
-    def is_float(value):
+    def isfloaty(self, value):
         try:
             float_value = float(value)
             return True
@@ -69,16 +68,31 @@ class Lexer():
             if self.tok in self.types:
                 self.add_token(image=self.tok, token_type=self.types[self.tok])
                 
-            if self.tok == " " and self.stringstart == False:
-                self.tok = ""
-                
+            if char == " " and self.stringstart == False:
+                if self.tok == " ":
+                    tok = ""
+                elif self.tok[:-1].isnumeric():
+                    self.add_token(image=self.tok[:-1], token_type="INTEGER")
+                elif self.isfloaty(self.tok[:-1]) == True:
+                    self.add_token(image=self.tok[:-1], token_type="FLOAT")
+                    
             if char == "\"":
                 self.stringything()
             
             if char == '\n':   
+                if self.tok[1:-1].isnumeric():
+                    self.add_token(image=self.tok[1:-1], token_type="INTEGER")
+                elif self.isfloaty(self.tok[1:-1]) == True:
+                    self.add_token(image=self.tok[1:-1], token_type="FLOAT")
+                    
                 self.tokens.append(self.line)
                 self.line = []
                 
+                
         if self.line != []: #checks if a line has been entered with nun on
+            if self.tok[1:].isnumeric():
+                self.add_token(image=self.tok[1:], token_type="INTEGER")
+            elif self.isfloaty(self.tok[1:]) == True:
+                self.add_token(image=self.tok[1:], token_type="FLOAT")
             self.tokens.append(self.line)
         return self.tokens

@@ -7,6 +7,8 @@ class Lexer():
         "MOD": "AO",
         "DIV": "AO",
         
+        "<-": "ARRW",
+        
         "OUTPUT": "OUT",
         "USERINPUT": "IN",
         
@@ -27,6 +29,28 @@ class Lexer():
         "LEN": "MANIPULATOR",
         "SUBSTRING": "MANIPULATOR",
         "POSITION": "MANIPULATOR",
+        
+        "DO": "ToDo",
+        "THEN": "ToDo",
+        "CONSTANT": "ToDo",
+        "RETURN": "ToDo",
+        "WHILE": "ToDo",
+        "ENDWHILE": "ToDo",
+        "FOR": "ToDo",
+        "ENDFOR": "ToDo",
+        "REPEAT": "ToDo",
+        "UNTIL": "ToDo",
+        "IF": "ToDo",
+        "ENDIF": "ToDo",
+        "ELSE": "ToDo",
+        "ELIF": "ToDo",
+        "SUBROUTINE": "ToDo",
+        "ENDSUBROUTINE": "ToDo",
+        "RECORD": "ToDo",
+        "ENDRECORD": "ToDo",
+        "TO": "ToDo",
+        "STEP": "ToDo"
+
     }
 
     def __init__(self):

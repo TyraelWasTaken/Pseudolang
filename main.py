@@ -5,7 +5,7 @@ def openfile(filename):
     return data
 
 if __name__ == "__main__":
-    data = openfile("test.aqa")
+    data = openfile("C:/Users/samue/OneDrive/Documents/code/Psuedolang/Pseudolang/Pseudolang/Testing/test.aqa")
     
     tokens = langcode.pseudocode_lexer.lex(data)
     print(tokens) 

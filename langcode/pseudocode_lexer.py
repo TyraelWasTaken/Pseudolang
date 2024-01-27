@@ -106,20 +106,21 @@ class Lexer():
             if char == "\"":
                 self.stringything()
             
-            if char == '\n':   
-                if self.tok[1:-1].isnumeric():
-                    self.add_token(image=self.tok[1:-1], token_type="INTEGER")
-                elif self.isfloaty(self.tok[1:-1]) == True:
-                    self.add_token(image=self.tok[1:-1], token_type="FLOAT")
+            if char == '\n' and self.line != []:   
+                if self.tok[0:-1].isnumeric():
+                    self.add_token(image=self.tok[0:-1], token_type="INTEGER")
+                elif self.isfloaty(self.tok[0:-1]) == True:
+                    self.add_token(image=self.tok[0:-1], token_type="FLOAT")
                     
                 self.tokens.append(self.line)
                 self.line = []
+                self.tok = ""
                 
                 
         if self.line != []: #checks if a line has been entered with nun on
-            if self.tok[1:].isnumeric():
-                self.add_token(image=self.tok[1:], token_type="INTEGER")
-            elif self.isfloaty(self.tok[1:]) == True:
-                self.add_token(image=self.tok[1:], token_type="FLOAT")
+            if self.tok[0:].isnumeric():
+                self.add_token(image=self.tok[0:], token_type="INTEGER")
+            elif self.isfloaty(self.tok[0:]) == True:
+                self.add_token(image=self.tok[0:], token_type="FLOAT")
             self.tokens.append(self.line)
         return self.tokens

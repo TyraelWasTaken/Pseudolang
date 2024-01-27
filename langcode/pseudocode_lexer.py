@@ -1,3 +1,4 @@
+#LEXER
 class Lexer():
     types = {
         "+": "AO",
@@ -33,26 +34,26 @@ class Lexer():
         "SUBSTRING": "MANIPULATOR",
         "POSITION": "MANIPULATOR",
         
-        "DO": "CONLOOP",
-        "THEN": "CONDITION",
-        "CONSTANT": "DECLARATION",
-        "RETURN": "FUNCTION",
-        "WHILE": "CONLOOP",
-        "ENDWHILE": "CONLOOP",
-        "FOR": "RANGE",
-        "ENDFOR": "RANGE",
-        "REPEAT": "CONLOOP",
-        "UNTIL": "CONLOOP",
-        "IF": "CONDITION",
-        "ENDIF": "CONDITION",
-        "ELSE": "CONDITION",
-        "ELIF": "CONDITION",
-        "SUBROUTINE": "THREAD",
-        "ENDSUBROUTINE": "THREAD",
-        "RECORD": "RECORD",
-        "ENDRECORD": "RECORD",
-        "TO": "RANGE",
-        "STEP": "RANGE"
+        "DO": "ToDo",
+        "THEN": "ToDo",
+        "CONSTANT": "ToDo",
+        "RETURN": "ToDo",
+        "WHILE": "ToDo",
+        "ENDWHILE": "ToDo",
+        "FOR": "ToDo",
+        "ENDFOR": "ToDo",
+        "REPEAT": "ToDo",
+        "UNTIL": "ToDo",
+        "IF": "ToDo",
+        "ENDIF": "ToDo",
+        "ELSE": "ToDo",
+        "ELIF": "ToDo",
+        "SUBROUTINE": "ToDo",
+        "ENDSUBROUTINE": "ToDo",
+        "RECORD": "ToDo",
+        "ENDRECORD": "ToDo",
+        "TO": "ToDo",
+        "STEP": "ToDo"
 
     }
 
@@ -111,11 +112,6 @@ class Lexer():
             if char == "\"":
                 self.stringything()
             
-            
-            if char == '\n':
-                self.add_token(image='EOL', token_type='EOL')
-            
-
             if char == '\n' and self.line != []:   
                 if self.tok[0:-1].isnumeric():
                     self.add_token(image=self.tok[0:-1], token_type="INTEGER")
@@ -127,13 +123,7 @@ class Lexer():
                 self.tok = ""
             if self.tok == '\n':
                 self.tok = ""
-            
-            if char == "<" or char == "-" and arrow != "":
-                arrow += char
-                if arrow == "<--":
-                    del self.line[-3:]
-                    self.add_token(image="<--", token_type="ARRW")
-                    arrow = ""
+                
                 
         if self.line != []: #checks if a line has been entered with nun on
             if self.tok[0:].isnumeric():
@@ -141,7 +131,4 @@ class Lexer():
             elif self.isfloaty(self.tok[0:]) == True:
                 self.add_token(image=self.tok[0:], token_type="FLOAT")
             self.tokens.append(self.line)
-
-        self.add_token(image='EOF', token_type='EOF')
         return self.tokens
-

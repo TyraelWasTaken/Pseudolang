@@ -7,15 +7,17 @@ class Lexer():
         "MOD": "AO",
         "DIV": "AO",
         
-        "<-": "ARRW",
+        "^": "ARRW",
+        ">": "SIGN",
+        "<": "SIGN",
         
         "OUTPUT": "OUT",
         "USERINPUT": "IN",
         
-        "(": "CB",
-        ")": "CB",
-        "]": "SB",
-        "[": "SB",
+        "(": "CBO",
+        ")": "CBC",
+        "]": "SBO",
+        "[": "SBC",
         
         "CODE_TO_CHAR": "CONVERTOR",
         "CODE_TO_CHAR": "CONVERTOR",
@@ -114,6 +116,8 @@ class Lexer():
                     
                 self.tokens.append(self.line)
                 self.line = []
+                self.tok = ""
+            if self.tok == '\n':
                 self.tok = ""
                 
                 

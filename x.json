@@ -1,0 +1,54 @@
+[
+    [
+        {
+            "image": "n ",
+            "type": "VAR"
+        },
+        {
+            "image": "^",
+            "type": "ARRW"
+        },
+        {
+            "image": "0",
+            "type": "INTEGER"
+        }
+    ],
+    [
+        {
+            "image": "WHILE",
+            "type": "ToDo"
+        },
+        {
+            "image": "n ",
+            "type": "VAR"
+        },
+        {
+            "image": "<",
+            "type": "SIGN"
+        },
+        {
+            "image": "2",
+            "type": "INTEGER"
+        },
+        {
+            "image": "DO",
+            "type": "ToDo"
+        }
+    ],
+    [
+        {
+            "image": "OUTPUT",
+            "type": "OUT"
+        },
+        {
+            "image": "a",
+            "type": "STRING"
+        }
+    ],
+    [
+        {
+            "image": "ENDWHILE",
+            "type": "ToDo"
+        }
+    ]
+]

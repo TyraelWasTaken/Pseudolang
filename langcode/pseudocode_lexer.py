@@ -5,10 +5,13 @@ types = {
     "/": "AO",
     "MOD": "AO",
     "DIV": "AO",
+    
+    "OUTPUT": "OUT"
 }
 
 '''
 AO = Arithematic Operator
+OUT = Output
 '''
 
 def lex(data):
@@ -17,25 +20,24 @@ def lex(data):
     
     tokens = []
     currentToken = {}
-    state = 0   # will be a different sometimes smh
+    stringstart = False
     tok = ""
     
     for char in content:
-        if char == " " or char == ";" and state == 0: # we will need to put a ";" at the end of each line unless we use the \n when a new line starts :p
-                
+        if (char == " " or char == ";") and stringstart == False: # we will need to put a ";" at the end of each line unless we use the \n when a new line starts :p
             if tok.isnumeric():
-                
+                    
                 currentToken = {
                     "image": tok,
                     "type": "integer"
                 }
                 tokens.append(currentToken)
                 currentToken = {}
-            
-                tok = ""
-            
-            if tok in types:
                 
+                tok = ""
+                
+            if tok in types:
+                    
                 if types[tok] == "AO":
                     
                     currentToken = {
@@ -43,15 +45,33 @@ def lex(data):
                         "type": "AO"
                     }
                     
-                    tokens.append(currentToken) 
-                    currentToken = {}
+                elif types[tok] == "OUT":
+                    currentToken = {
+                        "type": "OUT"
+                    }
+                    
+                tokens.append(currentToken) 
+                currentToken = {}
                 tok = ""
+                
             if tok == " " or tok == ";":
                 tok = ""
+                
+        if char == "\"":
+            if stringstart == False:
+                stringstart == True
+            elif stringstart == True:
+                currentToken = {
+                        "image": tok,
+                        "type": "STRING"
+                    }
+                tokens.append(currentToken) 
+                currentToken = {}
+                stringstart == False
+            tok = ""
+            
         else: 
             tok += char
-            
         
             
-        
     return tokens # this is epic fr (totally not dying inside making this)

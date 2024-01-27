@@ -1,4 +1,4 @@
-class Lexer:
+class Lexer():
     types = {
         "+": "AO",
         "-": "AO",
@@ -6,7 +6,27 @@ class Lexer:
         "/": "AO",
         "MOD": "AO",
         "DIV": "AO",
-        "OUTPUT": "OUT"
+        
+        "OUTPUT": "OUT",
+        "USERINPUT": "IN",
+        
+        "(": "CB",
+        ")": "CB",
+        "]": "SB",
+        "[": "SB",
+        
+        "CODE_TO_CHAR": "CONVERTOR",
+        "CODE_TO_CHAR": "CONVERTOR",
+        "REAL_TO_STRING": "CONVERTOR",
+        "INT_TO_STRING": "CONVERTOR",
+        "STRING_TO_TREAL": "CONVERTOR",
+        "STRING_TO_INT": "CONVERTOR",
+        
+        "RANDINT": "RAND",
+        
+        "LEN": "MANIPULATOR",
+        "SUBSTRING": "MANIPULATOR",
+        "POSITION": "MANIPULATOR",
     }
 
     def __init__(self):
@@ -45,10 +65,11 @@ class Lexer:
                     self.tok = ""
 
                 elif self.tok in self.types:
-                    if self.types[self.tok] == "AO":
-                        self.add_token(self.tok, "AO")
-                    elif self.types[self.tok] == "OUT":
-                        self.currentToken = {"type": "OUT"}
+                    if self.types[self.tok] == "AO" or self.types[self.tok] == "CB" or self.types[self.tok] == "SB":
+                        self.add_token(self.tok, self.types[self.tok])
+                        self.currentToken = {}
+                    elif self.types[self.tok] == "OUT" or self.types[self.tok] == "IN":
+                        self.currentToken = {"type": self.types[self.tok]}
                         self.tokens.append(self.currentToken)
                         self.currentToken = {}
                     self.tok = ""
@@ -63,6 +84,7 @@ class Lexer:
                     self.add_token(self.tok, "STRING")
                     self.tok = ""
                     self.stringstart = False
+
             else:
                 self.tok += char
 

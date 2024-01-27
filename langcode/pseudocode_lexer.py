@@ -4,26 +4,25 @@ types = {
     "*": "AO",
     "/": "AO",
     "MOD": "AO",
-    "DIV": "AO"
+    "DIV": "AO",
 }
 
 '''
-AO = Arithmatic Operator
+AO = Arithematic Operator
 '''
 
-
 def lex(data):
+    
     content = list(data)
     
     tokens = []
     currentToken = {}
-    state = 0   # will be 1 if a string has started or something smh
+    state = 0   # will be a different sometimes smh
     tok = ""
     
     for char in content:
-        
         if char == " " or char == ";" and state == 0: # we will need to put a ";" at the end of each line unless we use the \n when a new line starts :p
-            
+                
             if tok.isnumeric():
                 
                 currentToken = {
@@ -33,17 +32,26 @@ def lex(data):
                 tokens.append(currentToken)
                 currentToken = {}
             
-            tok = ""
+                tok = ""
             
-        elif char in types and types[char]  == "AO" and state == 0:
-            currentToken = {
-                "image": char,
-                "type": "AO"
-            }
-            tokens.append(currentToken)
-            tok = ""
-        else:
+            if tok in types:
+                
+                if types[tok] == "AO":
+                    
+                    currentToken = {
+                        "image": tok,
+                        "type": "AO"
+                    }
+                    
+                    tokens.append(currentToken) 
+                    currentToken = {}
+                tok = ""
+            if tok == " " or tok == ";":
+                tok = ""
+        else: 
             tok += char
             
         
-    return tokens
+            
+        
+    return tokens # this is epic fr (totally not dying inside making this)

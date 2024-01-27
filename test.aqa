@@ -1,5 +1,1 @@
-n ^ 0
-
-WHILE n < 2 DO
-    OUTPUT "a"
-ENDWHILE
+a <-- 2

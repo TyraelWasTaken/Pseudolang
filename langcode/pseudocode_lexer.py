@@ -6,8 +6,10 @@ class Lexer():
         "/": "AO",
         "MOD": "AO",
         "DIV": "AO",
+
+        "==": "COMPARE",
         
-        "^": "ARRW",
+        "<--": "ARRW",
         ">": "SIGN",
         "<": "SIGN",
         
@@ -20,38 +22,37 @@ class Lexer():
         "[": "SBC",
         
         "CODE_TO_CHAR": "CONVERTOR",
-        "CODE_TO_CHAR": "CONVERTOR",
         "REAL_TO_STRING": "CONVERTOR",
         "INT_TO_STRING": "CONVERTOR",
         "STRING_TO_TREAL": "CONVERTOR",
         "STRING_TO_INT": "CONVERTOR",
         
-        "RANDINT": "RAND",
+        "RANDINT": "RANDOM",
         
         "LEN": "MANIPULATOR",
         "SUBSTRING": "MANIPULATOR",
         "POSITION": "MANIPULATOR",
         
-        "DO": "ToDo",
-        "THEN": "ToDo",
-        "CONSTANT": "ToDo",
-        "RETURN": "ToDo",
-        "WHILE": "ToDo",
-        "ENDWHILE": "ToDo",
-        "FOR": "ToDo",
-        "ENDFOR": "ToDo",
-        "REPEAT": "ToDo",
-        "UNTIL": "ToDo",
-        "IF": "ToDo",
-        "ENDIF": "ToDo",
-        "ELSE": "ToDo",
-        "ELIF": "ToDo",
-        "SUBROUTINE": "ToDo",
-        "ENDSUBROUTINE": "ToDo",
-        "RECORD": "ToDo",
-        "ENDRECORD": "ToDo",
-        "TO": "ToDo",
-        "STEP": "ToDo"
+        "DO": "CONLOOP",
+        "THEN": "CONDITION",
+        "CONSTANT": "DECLARATION",
+        "RETURN": "FUNCTION",
+        "WHILE": "CONLOOP",
+        "ENDWHILE": "CONLOOP",
+        "FOR": "RANGE",
+        "ENDFOR": "RANGE",
+        "REPEAT": "CONLOOP",
+        "UNTIL": "CONLOOP",
+        "IF": "CONDITION",
+        "ENDIF": "CONDITION",
+        "ELSE": "CONDITION",
+        "ELIF": "CONDITION",
+        "SUBROUTINE": "THREAD",
+        "ENDSUBROUTINE": "THREAD",
+        "RECORD": "RECORD",
+        "ENDRECORD": "RECORD",
+        "TO": "RANGE",
+        "STEP": "RANGE"
 
     }
 
@@ -88,7 +89,7 @@ class Lexer():
         
     def lex(self, data):
         content = list(data)
-
+        arrow = ""
         for char in content:
             self.tok += char
             
@@ -102,12 +103,19 @@ class Lexer():
                 else:
                     self.add_token(image=self.tok[:-1], token_type="VAR")
                     
+
+            
             if self.tok in self.types:
                 self.add_token(image=self.tok, token_type=self.types[self.tok])
                         
             if char == "\"":
                 self.stringything()
             
+            
+            if char == '\n':
+                self.add_token(image='EOL', token_type='EOL')
+            
+
             if char == '\n' and self.line != []:   
                 if self.tok[0:-1].isnumeric():
                     self.add_token(image=self.tok[0:-1], token_type="INTEGER")
@@ -119,7 +127,13 @@ class Lexer():
                 self.tok = ""
             if self.tok == '\n':
                 self.tok = ""
-                
+            
+            if char == "<" or char == "-" and arrow != "":
+                arrow += char
+                if arrow == "<--":
+                    del self.line[-3:]
+                    self.add_token(image="<--", token_type="ARRW")
+                    arrow = ""
                 
         if self.line != []: #checks if a line has been entered with nun on
             if self.tok[0:].isnumeric():
@@ -127,4 +141,7 @@ class Lexer():
             elif self.isfloaty(self.tok[0:]) == True:
                 self.add_token(image=self.tok[0:], token_type="FLOAT")
             self.tokens.append(self.line)
+
+        self.add_token(image='EOF', token_type='EOF')
         return self.tokens
+

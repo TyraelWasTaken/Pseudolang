@@ -100,7 +100,7 @@ class Lexer():
                 elif self.isfloaty(self.tok[:-1]) == True:
                     self.add_token(image=self.tok[:-1], token_type="FLOAT")
                 else:
-                    self.add_token(image=self.tok, token_type="VAR")
+                    self.add_token(image=self.tok[:-1], token_type="VAR")
                     
             if self.tok in self.types:
                 self.add_token(image=self.tok, token_type=self.types[self.tok])

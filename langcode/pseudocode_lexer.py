@@ -1,18 +1,17 @@
-#LEXER
 class Lexer():
     types = {
-        "+": "AO",
-        "-": "AO",
-        "*": "AO",
-        "/": "AO",
-        "MOD": "AO",
-        "DIV": "AO",
+        "+": "PLUS",
+        "-": "SUBTRACT",
+        "*": "MUL",
+        "/": "FRAC",
+        "MOD": "MOD",
+        "DIV": "DIV",
 
         "==": "COMPARE",
         
         "<--": "ARRW",
-        ">": "SIGN",
-        "<": "SIGN",
+        ">": "GTHAN",
+        "<": "LTHAN",
         
         "OUTPUT": "OUT",
         "USERINPUT": "IN",
@@ -22,44 +21,43 @@ class Lexer():
         "]": "SBO",
         "[": "SBC",
         
-        "CODE_TO_CHAR": "CONVERTOR",
-        "REAL_TO_STRING": "CONVERTOR",
-        "INT_TO_STRING": "CONVERTOR",
-        "STRING_TO_TREAL": "CONVERTOR",
-        "STRING_TO_INT": "CONVERTOR",
+        "CODE_TO_CHAR": "CODE_TO_CHAR",
+        "REAL_TO_STRING": "REAL_TO_STRING",
+        "INT_TO_STRING": "INT_TO_STRING",
+        "STRING_TO_TREAL": "STRING_TO_TREAL",
+        "STRING_TO_INT": "STRING_TO_INT",
         
         "RANDINT": "RAND",
         
-        "LEN": "MANIPULATOR",
-        "SUBSTRING": "MANIPULATOR",
-        "POSITION": "MANIPULATOR",
+        "LEN": "LEN",
+        "SUBSTRING": "SUBS",
+        "POSITION": "POS",
         
-        "DO": "CONLOOP",                #DO is not necessary
-        "THEN": "CONDITION",
-        "CONSTANT": "DECLARATION",
-        "RETURN": "FUNCTION",
-        "WHILE": "CONLOOP",
-        "ENDWHILE": "CONLOOP",
-        "FOR": "RANGE",
-        "ENDFOR": "RANGE",
-        "REPEAT": "CONLOOP",
-        "UNTIL": "CONLOOP",
-        "IF": "CONDITION",
-        "ENDIF": "CONDITION",
-        "ELSE": "CONDITION",
-        "ELIF": "CONDITION",
-        "SUBROUTINE": "THREAD",
-        "ENDSUBROUTINE": "THREAD",
-        "RECORD": "RECORD",
-        "ENDRECORD": "RECORD",
-        "TO": "RANGE",
-        "STEP": "RANGE"
+        "DO": "DO",
+        "THEN": "THEN",
+        "CONSTANT": "CONST",
+        "RETURN": "RETURN",
+        "WHILE": "WHI",
+        "ENDWHILE": "ENDWHI",
+        "FOR": "FOR",
+        "ENDFOR": "ENDFOR",
+        "REPEAT": "REP",
+        "UNTIL": "UNTIL",
+        "IF": "IF",
+        "ENDIF": "ENDIF",
+        "ELSE": "ELSE",
+        "ELIF": "ELIF",
+        "SUBROUTINE": "SUBR",
+        "ENDSUBROUTINE": "ENDSUBR",
+        "RECORD": "REC",
+        "ENDRECORD": "ENDREC",
+        "TO": "TO",
+        "STEP": "STEP"
 
     }
-
     def __init__(self):
         self.tokens = []
-        self.currentToken = {}
+        self.currentToken = []
         self.stringstart = False
         self.tok = ""
         self.line = []
@@ -72,12 +70,9 @@ class Lexer():
             return False
         
     def add_token(self, image, token_type):
-        self.currentToken = {
-            "image": image,
-            "type": token_type
-        }
+        self.currentToken = [str(token_type) + ":" + str(image)]
         self.line.append(self.currentToken)
-        self.currentToken = {}
+        self.currentToken = []
         self.tok = ""
         
     def stringything(self):
@@ -87,7 +82,14 @@ class Lexer():
         elif self.stringstart == True:
             self.add_token(image=self.tok[:-1], token_type="STRING")
             self.stringstart = False
-        
+    def final(self):
+        x = self.tokens
+        self.tokens = []
+        for i in x:
+            for j in i:
+                self.tokens.append(j[0])
+            self.tokens.append("EOL:EOL")
+                
     def lex(self, data):
         content = list(data)
         arrow = ""
@@ -145,10 +147,5 @@ class Lexer():
             self.tokens.append(self.line)
 
         self.add_token(image='EOL', token_type='EOL')
+        self.final()
         return self.tokens
-
-        
-    
-#Parsers
-#    def Parser(self):
-        

@@ -1,54 +1,18 @@
 [
-    [
-        {
-            "image": "n ",
-            "type": "VAR"
-        },
-        {
-            "image": "^",
-            "type": "ARRW"
-        },
-        {
-            "image": "0",
-            "type": "INTEGER"
-        }
-    ],
-    [
-        {
-            "image": "WHILE",
-            "type": "ToDo"
-        },
-        {
-            "image": "n ",
-            "type": "VAR"
-        },
-        {
-            "image": "<",
-            "type": "SIGN"
-        },
-        {
-            "image": "2",
-            "type": "INTEGER"
-        },
-        {
-            "image": "DO",
-            "type": "ToDo"
-        }
-    ],
-    [
-        {
-            "image": "OUTPUT",
-            "type": "OUT"
-        },
-        {
-            "image": "a",
-            "type": "STRING"
-        }
-    ],
-    [
-        {
-            "image": "ENDWHILE",
-            "type": "ToDo"
-        }
-    ]
+    "VAR:n",
+    "ARRW:<--",
+    "INTEGER:0",
+    "EOL:EOL",
+    "None:WHILE",
+    "VAR:n",
+    "LTHAN:<",
+    "INTEGER:2",
+    "DO:DO",
+    "EOL:EOL",
+    "OUT:OUTPUT",
+    "STRING:a",
+    "EOL:EOL",
+    "ENDWHI:ENDWHILE",
+    "EOL:EOL",
+    "EOL:EOL"
 ]

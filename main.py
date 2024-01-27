@@ -9,5 +9,5 @@ if __name__ == "__main__":
     data = openfile("test.aqa")
     tokens = lexer.lex(data)
     print(tokens)
-    
+    print(list(data))
     # there has gotta be a better way to do the lexer stuff lmao

@@ -34,6 +34,7 @@ class Lexer():
         self.currentToken = {}
         self.stringstart = False
         self.tok = ""
+        self.line = []
 
     @staticmethod
     def is_float(value):
@@ -42,50 +43,42 @@ class Lexer():
             return True
         except ValueError:
             return False
-
+        
     def add_token(self, image, token_type):
         self.currentToken = {
             "image": image,
             "type": token_type
         }
-        self.tokens.append(self.currentToken)
+        self.line.append(self.currentToken)
         self.currentToken = {}
-
+        self.tok = ""
+        
+    def stringything(self):
+        if self.stringstart == False:
+            self.stringstart = True
+            self.tok = ""
+        elif self.stringstart == True:
+            self.add_token(image=self.tok[:-1], token_type="STRING")
+            self.stringstart = False
+        
     def lex(self, data):
         content = list(data)
 
         for char in content:
-            if (char == " " or char == ";") and not self.stringstart:
-                if self.tok.isnumeric():
-                    self.add_token(self.tok, "integer")
-                    self.tok = ""
-
-                elif self.is_float(self.tok):
-                    self.add_token(self.tok, "float")
-                    self.tok = ""
-
-                elif self.tok in self.types:
-                    if self.types[self.tok] == "AO" or self.types[self.tok] == "CB" or self.types[self.tok] == "SB":
-                        self.add_token(self.tok, self.types[self.tok])
-                        self.currentToken = {}
-                    elif self.types[self.tok] == "OUT" or self.types[self.tok] == "IN":
-                        self.currentToken = {"type": self.types[self.tok]}
-                        self.tokens.append(self.currentToken)
-                        self.currentToken = {}
-                    self.tok = ""
-
-                if char == " " or char == ";":
-                    self.tok = ""
-
-            elif char == "\"":
-                if not self.stringstart:
-                    self.stringstart = True
-                elif self.stringstart:
-                    self.add_token(self.tok, "STRING")
-                    self.tok = ""
-                    self.stringstart = False
-
-            else:
-                self.tok += char
-
+            self.tok += char
+            if self.tok in self.types:
+                self.add_token(image=self.tok, token_type=self.types[self.tok])
+                
+            if self.tok == " " and self.stringstart == False:
+                self.tok = ""
+                
+            if char == "\"":
+                self.stringything()
+            
+            if char == '\n':   
+                self.tokens.append(self.line)
+                self.line = []
+                
+        if self.line != []: #checks if a line has been entered with nun on
+            self.tokens.append(self.line)
         return self.tokens

@@ -1,0 +1,34 @@
+[
+    [
+        {
+            "image": "a",
+            "type": "VAR"
+        },
+        {
+            "image": "<--",
+            "type": "ARRW"
+        },
+        {
+            "image": "2",
+            "type": "INTEGER"
+        }
+    ],
+    [
+        {
+            "image": "b",
+            "type": "VAR"
+        },
+        {
+            "image": "<--",
+            "type": "ARRW"
+        },
+        {
+            "image": "23",
+            "type": "INTEGER"
+        },
+        {
+            "image": "EOL",
+            "type": "EOL"
+        }
+    ]
+]

@@ -7,9 +7,20 @@ def openfile(filename):
 
 if __name__ == "__main__":
     lexer = langcode.pseudocode_lexer.Lexer()
-    data = openfile("test.aqa")
+    data = openfile("Pseudolang/Pseudolang/test.aqa")
     tokens = lexer.lex(data)
     print(tokens)
+    #print(list(data))
+    # there has gotta be a better way to do the lexer stuff lmao
+    with open("Pseudolang/Pseudolang/x.json", "w") as a:
+        json.dump(tokens, a, indent=4)
+    
+    for items in tokens:
+        print(items)
 
-    with open("x.json", "w") as a:
-        json.dump(tokens, a, indent=4) #easyer to read
+    parser = langcode.pseudocode_lexer.Parser(tokens)
+    trees = parser.parse()
+
+
+
+    #I don't know what I am doing
